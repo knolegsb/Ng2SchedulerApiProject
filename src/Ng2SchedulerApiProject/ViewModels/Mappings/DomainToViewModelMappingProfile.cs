@@ -10,7 +10,7 @@ namespace Ng2SchedulerApiProject.ViewModels.Mappings
 {
     public class DomainToViewModelMappingProfile : Profile
     {
-        protected override void Configure()
+        protected static void Configure()
         {
             Mapper.Initialize(cfg =>
             {

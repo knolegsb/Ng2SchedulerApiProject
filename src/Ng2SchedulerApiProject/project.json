@@ -22,6 +22,8 @@
     "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
     "AutoMapper": "6.0.2",
     "FluentValidation": "7.0.0",
+    "Microsoft.AspNetCore.StaticFiles": "1.1.0",
+    "Microsoft.AspNetCore.Diagnostics": "1.1.0",
   },
 
   "tools": {
@@ -32,6 +34,7 @@
     "netcoreapp1.0": {
       "imports": [
         "dotnet5.6",
+        "dnxcore50",
         "portable-net45+win8"
       ]
     }
