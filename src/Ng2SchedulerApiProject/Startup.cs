@@ -4,9 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Ng2Scheduler.Data;
+using Newtonsoft.Json.Serialization;
+using Ng2Scheduler.Data.Abstract;
+using Ng2Scheduler.Data.Repositories;
 
 namespace Ng2SchedulerApiProject
 {
@@ -15,7 +20,7 @@ namespace Ng2SchedulerApiProject
         private static string _applicationPath = string.Empty;
         string sqlConnectionString = string.Empty;
         bool useInMemoryProvider = false;
-        public IConfigurationRoot configuration { get; }
+        //public IConfigurationRoot configuration { get; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -26,6 +31,10 @@ namespace Ng2SchedulerApiProject
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+            //if (env.IsDevelopment())
+            //{
+            //    builder.AddUserSecrets<Startup>();
+            //}
             Configuration = builder.Build();
         }
 
@@ -34,8 +43,36 @@ namespace Ng2SchedulerApiProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string sqlConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                useInMemoryProvider = bool.Parse(Configuration["AppSettings:InMemoryProvider"]);
+            }
+            catch { }
+
+            services.AddDbContext<SchedulerContext>(options =>
+            {
+                switch (useInMemoryProvider)
+                {
+                    case true:
+                        options.UseInMemoryDatabase();
+                        break;
+                    default:
+                        options.UseSqlServer(sqlConnectionString, b => b.MigrationsAssembly("Ng2SchedulerApiProject"));
+                        break;
+                }
+            });
+
+            services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+
+            AutoMapperConfiguration.Configure();
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(opts => {
+                    opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

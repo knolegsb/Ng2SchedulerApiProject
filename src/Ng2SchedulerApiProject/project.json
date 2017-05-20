@@ -14,7 +14,14 @@
     "Microsoft.Extensions.Logging": "1.0.0",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
-    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0"
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
+    "Microsoft.EntityFrameworkCore": "1.1.0",
+    "Ng2Scheduler.Data": "1.0.0-*",
+    "Ng2Scheduler.Model": "1.0.0-*",
+    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
+    "AutoMapper": "6.0.2",
+    "FluentValidation": "7.0.0",
   },
 
   "tools": {
