@@ -1,0 +1,16 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Microsoft.EntityFrameworkCore": "2.0.0-preview1-final",
+    "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
+    "NETStandard.Library": "1.6.0",
+    "Ng2Scheduler.Model": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}
