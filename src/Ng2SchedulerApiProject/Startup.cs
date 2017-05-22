@@ -16,6 +16,7 @@ using Ng2SchedulerApiProject.ViewModels.Mappings;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Ng2SchedulerApiProject.Extensions;
 
 namespace Ng2SchedulerApiProject
 {
@@ -108,7 +109,7 @@ namespace Ng2SchedulerApiProject
                         var error = context.Features.Get<IExceptionHandlerFeature>();
                         if (error != null)
                         {
-                            //context.Response..AddApplicationError(error.Error.Message);
+                            context.Response.AddApplicationError(error.Error.Message);
                             await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
                         }
                     });
